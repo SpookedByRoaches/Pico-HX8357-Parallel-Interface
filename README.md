@@ -16,7 +16,7 @@ does not
 
 
 
-# Features not included in this library are
+## Features not included in this library are
 1- Custom fonts
 2- PROGMEM bitmap drawing
 3- Grayscale bitmap drawing
