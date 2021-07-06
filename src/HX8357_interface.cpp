@@ -182,9 +182,9 @@ void HX_8357_8Bit::writedata(uint8_t data)
 {
     gpio_put(dc_pin, DC_DATA);
     #ifdef FLIPPED_CONNECTIONS
-    setDataBus(reverse_lookup_table[command]);
+    setDataBus(reverse_lookup_table[data]);
     #else
-    setDataBus(command);
+    setDataBus(data);
     #endif //FLIPPED_CONNECTIONS
     gpio_put(wr_pin, HIGH);
     gpio_put(wr_pin, LOW);
@@ -559,8 +559,12 @@ void HX_8357_8Bit::drawCircleHelper( int16_t x0, int16_t y0, int16_t r, uint8_t 
 
 /*
  * Function Name: fillCircle()
- * Description: 
- * Params: (int16_t x0, int16_t y0, int16_t r, uint16_t color)
+ * Description: Draw a filled circle
+ * Params: 
+ *  int16_t x0: center point column
+ *  int16_t y0: center point row
+ *  int16_t r: circle radius
+ *  uint16_t color: color
  */
 void HX_8357_8Bit::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 {
@@ -570,8 +574,12 @@ void HX_8357_8Bit::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 
 /*
  * Function Name: drawCircle()
- * Description: 
- * Params: (int16_t x0, int16_t y0, int16_t r, uint16_t color)
+ * Description: Draw a non-filled circle
+ * Params: 
+ *  int16_t x0: center point column
+ *  int16_t y0: center point row
+ *  int16_t r: circle radius
+ *  uint16_t color: color
  */
 void HX_8357_8Bit::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 {
@@ -609,10 +617,16 @@ void HX_8357_8Bit::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 
 /*
  * Function Name: drawRoundRect()
- * Description: 
- * Params: (int16_t x, int16_t y, int16_t w, int16_t h,
+ * Description: Draw a rounded rectangle
+ * Params: 
+ *  int16_t x: Top left corner x coordinate
+ *  int16_t y: Top left corner y coordinate 
+ *  int16_t w: Width in pixels
+ *  int16_t h: Height in pixels
+ *  int16_t r: Radius of corner rounding
+ *  uint16_t color: color
  */
-void HX_8357_8Bit::drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
+ void HX_8357_8Bit::drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
                                  int16_t r, uint16_t color) 
 {
     int16_t max_radius = ((w < h) ? w : h) / 2; // 1/2 minor axis
@@ -632,8 +646,14 @@ void HX_8357_8Bit::drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
 
 /*
  * Function Name: fillRoundRect()
- * Description: 
- * Params: (int16_t x, int16_t y, int16_t w, int16_t h,
+ * Description: Fill a rounded rectangle
+ * Params: 
+ *  int16_t x: Top left corner x coordinate
+ *  int16_t y: Top left corner y coordinate 
+ *  int16_t w: Width in pixels
+ *  int16_t h: Height in pixels
+ *  int16_t r: Radius of corner rounding
+ *  uint16_t color: color
  */
 void HX_8357_8Bit::fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
                                  int16_t r, uint16_t color) 
@@ -651,8 +671,14 @@ void HX_8357_8Bit::fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
 
 /*
  * Function Name: drawTriangle()
- * Description: 
- * Params: (int16_t x0, int16_t y0, int16_t x1, int16_t y1,
+ * Description: Draw a triangle with the 3 provided corners
+ * Params: 
+ *  int16_t x0: First corner column
+ *  int16_t y0: First corner row
+ *  int16_t x1: Second corner column
+ *  int16_t y1: Second corner row
+ *  int16_t x2: Third corner column
+ *  int16_t y2: Third corner row
  */
 void HX_8357_8Bit::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
                                 int16_t x2, int16_t y2, uint16_t color) 
@@ -664,8 +690,14 @@ void HX_8357_8Bit::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
 
 /*
  * Function Name: fillTriangle()
- * Description: 
- * Params: (int16_t x0, int16_t y0, int16_t x1, int16_t y1,
+ * Description: Fill a triangle with the 3 provided corners
+ * Params: 
+ *  int16_t x0: First corner column
+ *  int16_t y0: First corner row
+ *  int16_t x1: Second corner column
+ *  int16_t y1: Second corner row
+ *  int16_t x2: Third corner column
+ *  int16_t y2: Third corner row
  */
 void HX_8357_8Bit::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
                                 int16_t x2, int16_t y2, uint16_t color) 
@@ -744,8 +776,16 @@ void HX_8357_8Bit::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
 
 /*
  * Function Name: drawBitmap()
- * Description: 
- * Params: (int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, uint16_t bg)
+ * Description: Draw a monochrome bitmap with the provided background and foreground
+ *              colors
+ * Params: 
+ *  int16_t x: Starting column
+ *  int16_t y: Starting row
+ *  const uint8_t *bitmap: bitmap array pointer
+ *  int16_t w: width of photo
+ *  int16_t h: height of photo
+ *  uint16_t color: foreground color
+ *  uint16_t bg: background color
  */
 void HX_8357_8Bit::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, uint16_t bg)
 {
@@ -773,8 +813,13 @@ void HX_8357_8Bit::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16
 
 /*
  * Function Name: drawRGBBitmap()
- * Description: 
- * Params: (int16_t x, int16_t y, const uint16_t *bitmap, int16_t w, int16_t h) 
+ * Description: Draw a bitmap with the provided array colors
+ * Params: 
+ *  int16_t x: Starting column
+ *  int16_t y: Starting row
+ *  const uint16_t *bitmap: bitmap array pointer
+ *  int16_t w: width of photo
+ *  int16_t h: height of photo
  */
 void HX_8357_8Bit::drawRGBBitmap(int16_t x, int16_t y, const uint16_t *bitmap, int16_t w, int16_t h) 
 {
@@ -796,16 +841,25 @@ void HX_8357_8Bit::drawRGBBitmap(int16_t x, int16_t y, const uint16_t *bitmap, i
     gpio_put(cs_pin, HIGH);
 }
 
+/*
+ * Get the screen height
+ */
 int HX_8357_8Bit::getHeight()
 {
     return height;
 }
 
+/*
+ * Get the screen width
+ */
 int HX_8357_8Bit::getWidth()
 {
     return width;
 }
 
+/*
+ * Get the screen rotation
+ */
 int HX_8357_8Bit::getRotation()
 {
 
@@ -814,8 +868,15 @@ int HX_8357_8Bit::getRotation()
 
 /*
  * Function Name: drawChar()
- * Description: 
- * Params: (int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg, uint8_t size_x,
+ * Description: Draws a character into the screen without updating the cursor
+ * Params: 
+ *  int16_t x: Starting column
+ *  int16_t y: Starting row
+ *  unsigned char c: Actual character
+ *  uint16_t color: foreground color
+ *  uint16_t bg: background color
+ *  uint8_t size_x: magnification of the font horizontally
+ *  uint8_t size_y: magnification of the font vertically
  */
 void HX_8357_8Bit::drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg, uint8_t size_x,
                             uint8_t size_y)
@@ -862,8 +923,10 @@ void HX_8357_8Bit::drawChar(int16_t x, int16_t y, unsigned char c, uint16_t colo
 
 /*
  * Function Name: setCursor()
- * Description: 
- * Params: (int16_t x, int16_t y)
+ * Description: Sets where characters would be written to the screen
+ * Params: 
+ *  int16_t x: column
+ *  int16_t y: row
  */
 void HX_8357_8Bit::setCursor(int16_t x, int16_t y)
 {
@@ -873,8 +936,9 @@ void HX_8357_8Bit::setCursor(int16_t x, int16_t y)
 
 /*
  * Function Name: setTextSize()
- * Description: 
- * Params: (uint8_t size)
+ * Description: Sets the magnification of the font
+ * Params: 
+ *  uint8_t size: value of the magnification
  */
 void HX_8357_8Bit::setTextSize(uint8_t size)
 {
@@ -884,8 +948,9 @@ void HX_8357_8Bit::setTextSize(uint8_t size)
 
 /*
  * Function Name: setTextColor()
- * Description: 
- * Params: (uint16_t color)
+ * Description: Set the foreground text color
+ * Params: 
+ *  uint16_t color
  */
 void HX_8357_8Bit::setTextColor(uint16_t color)
 {
@@ -894,8 +959,10 @@ void HX_8357_8Bit::setTextColor(uint16_t color)
 
 /*
  * Function Name: setTextColor()
- * Description: 
- * Params: (uint16_t fgcolor, uint16_t bgcolor)
+ * Description: Sets the foreground and background color of the text
+ * Params:
+ *  uint16_t fgcolor: foreground color
+ *  uint16_t bgcolor: background color
  */
 void HX_8357_8Bit::setTextColor(uint16_t fgcolor, uint16_t bgcolor)
 {
@@ -905,8 +972,11 @@ void HX_8357_8Bit::setTextColor(uint16_t fgcolor, uint16_t bgcolor)
 
 /*
  * Function Name: writeChar()
- * Description: 
- * Params: (uint8_t c) {
+ * Description: writes a character to the screen based on the parameters
+ *              set previously and are in the object attributes. It also
+ *              changes the cursor value for the next character to be written
+ * Params: 
+ *  uint8_t c: Character
  */
 void HX_8357_8Bit::writeChar(uint8_t c) {
     if (c == '\n') {              
@@ -925,8 +995,9 @@ void HX_8357_8Bit::writeChar(uint8_t c) {
 
 /*
  * Function Name: print()
- * Description: 
- * Params: (uint8_t *str)
+ * Description: similar to writeChar but with a null-terminated string
+ * Params: 
+ *  uint8_t *str: null-terminated string (VERY IMPORTANT TO HAVE IT NULL TERMINATED)
  */
 void HX_8357_8Bit::print(uint8_t *str)
 {
