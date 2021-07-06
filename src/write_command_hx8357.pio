@@ -1,0 +1,28 @@
+.program output
+loop:
+    pull
+    out pins, 8
+    jmp loop
+ 
+% c-sdk {
+ 
+static inline void output_program_init(PIO pio, uint sm, uint offset, uint pin_base, uint pin_num) {
+    pio_sm_config c = output_program_get_default_config(offset);
+ 
+    // Map the state machine's OUT pin group to one pin, namely the `pin`
+    // parameter to this function.
+    sm_config_set_out_pins(&c, pin_base, pin_num);
+    // Set this pin's GPIO function (connect PIO to the pad)
+    for(uint i=pin_base;i<(pin_base+pin_num);i++){
+        pio_gpio_init(pio,i); 
+    }
+    // Set the pin direction to output at the PIO
+    pio_sm_set_consecutive_pindirs(pio, sm, pin_base, pin_num, true);
+    
+ 
+    // Load our configuration, and jump to the start of the program
+    pio_sm_init(pio, sm, offset, &c);
+    // Set the state machine running
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}
