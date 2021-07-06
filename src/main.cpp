@@ -24,7 +24,7 @@ int main() {
     sleep_ms(2000);
     printf("Hello\n");
     while(true){
-        printText();
+        drawGrid();
      
         block();
         tft.fillScreen(BLACK);

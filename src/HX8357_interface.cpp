@@ -331,7 +331,7 @@ void HX_8357_8Bit::drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color
     if ((x >= width) || (y >= height)) return;
     if ((y + h - 1) >= height) h = height - y;
 
-    setAddrWindow(x, y, x, y + h);
+    setAddrWindow(x, y, x, y + h - 1);
 
     pushColor(color, h);
 }
@@ -350,7 +350,7 @@ void HX_8357_8Bit::drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color
     if ((x >= width) || (y >= height)) return;
     if ((x + w - 1) > width) w = width - x;
 
-    setAddrWindow(x, y, x + w, y);
+    setAddrWindow(x, y, x + w - 1 , y);
 
     pushColor(color, w);
 }
